@@ -1,0 +1,25 @@
+{
+  "name": "regexp-with-timeout",
+  "version": "1.0.0",
+  "description": "this package is created to solve regex backtracking (ReDOS Attack) issue",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beingvishalt/regexp-with-timeout.git"
+  },
+  "keywords": [
+    "regex",
+    "regex-backtracing",
+    "ReDOS",
+    "Timeout-regex"
+  ],
+  "author": "Vishal Tanawade",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/beingvishalt/regexp-with-timeout/issues"
+  },
+  "homepage": "https://github.com/beingvishalt/regexp-with-timeout#readme"
+}
