@@ -1,6 +1,6 @@
 {
   "name": "regexp-with-timeout",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "this package is created to solve regex backtracking (ReDOS Attack) issue",
   "main": "index.js",
   "scripts": {
