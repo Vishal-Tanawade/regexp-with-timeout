@@ -2,23 +2,23 @@ const { fork } = require("child_process");
 
 module.exports = ({ limit = 1 } = {}) => {
   let regexWorker = null;
-  let isworking = false;
+  let isWorking = false;
   const regexQueue = [];
   process.on("exit", cleanup);
   return {
-    test(regex, flags, string) {
+    test(regExp, flags, string) {
       return new Promise((resolve, reject) => {
         if (!regexWorker) {
           regexWorker = createRegexWorker();
         }
         regexQueue.push({
-          regex,
+          regExp,
           flags,
           string,
           resolve,
           reject,
         });
-        if (!isworking) {
+        if (!isWorking) {
           matchEachRegexViaWorker();
         }
         function createRegexWorker() {
@@ -34,25 +34,25 @@ module.exports = ({ limit = 1 } = {}) => {
           if (!regexQueue.length) {
             return;
           }
-          isworking = true;
-          const { regex, string, resolve, reject } = regexQueue.shift();
+          isWorking = true;
+          const { regExp, string, resolve, reject } = regexQueue.shift();
           regexWorker.once("message", receive);
           const timeout = setTimeout(function () {
             if (!isSettled) {
               regexWorker.kill();
               regexWorker = createRegexWorker();
               const error = new Error(
-                `regex takes more than ${limit} seconds to evaluate.`
+                `regExp takes more than ${limit} seconds to evaluate.`
               );
               error.name = "timeout";
               reject(error);
               isSettled = true;
-              isworking = false;
+              isWorking = false;
               matchEachRegexViaWorker();
             }
           }, limit * 1000);
           regexWorker.send({
-            regex,
+            regExp,
             flags,
             string,
           });
@@ -60,7 +60,7 @@ module.exports = ({ limit = 1 } = {}) => {
             clearTimeout(timeout);
             if (!isSettled) {
               isSettled = true;
-              isworking = false;
+              isWorking = false;
               resolve(message.result);
               matchEachRegexViaWorker();
             }
